@@ -77,3 +77,34 @@
 .content-wrapper .enter-app:hover {
     background: #96feff;
 }
+
+@media (max-width: 700px) {
+    #page-landing .location {
+        transform: translate(50%, 50%);
+        right: 50%;
+        text-align: center;
+    }
+
+    #page-landing .logoImg {
+        display: none;
+    }
+
+    #page-landing .content-wrapper {
+        justify-content: center;
+        padding: 0 15px;
+        background: none;
+    }
+
+    #page-landing .content-wrapper main h1 {
+        font-size: 46px;
+        line-height: 42px;
+    }
+
+    #page-landing .content-wrapper main p {
+        margin-top: 15px;
+    }
+
+    #page-landing .content-wrapper .enter-app {
+        right: 15px;
+    }
+}
