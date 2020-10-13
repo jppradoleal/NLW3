@@ -42,13 +42,17 @@ export class createOrphanages1602613219414 implements MigrationInterface {
             name: 'open_on_weekends',
             type: 'boolean',
             default: false
+          },
+          {
+            name: 'opening_hours',
+            type: 'varchar',
           }
         ]
       }))
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.dropTable('orphanages', true);
+    await queryRunner.dropTable('orphanages');
   }
 
 }

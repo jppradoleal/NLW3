@@ -1,15 +1,12 @@
 import express from 'express';
-import { Db } from 'typeorm';
-
 import './database/connection';
+
+import routes from './routes';
 
 const app = express();
 
 app.use(express.json());
-
-app.get('/', (req, res) => {
-    return res.status(200).json({message: 'Hello World'});
-});
+app.use(routes);
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Listening on ${8080}`);
