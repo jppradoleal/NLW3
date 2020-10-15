@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaWhatsapp } from 'react-icons/fa';
+// import { FaWhatsapp } from 'react-icons/fa';
 import { FiClock, FiInfo } from 'react-icons/fi';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { useParams } from 'react-router-dom';
@@ -29,6 +29,8 @@ interface OrphanageParams {
 }
 
 export default function Orphanage() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   const params = useParams<OrphanageParams>();
   const [ orphanage, setOrphanage ] = useState<Orphanage>();
   const [activeImageIndex, setActiveImageIndex] = useState(0); 
@@ -37,16 +39,23 @@ export default function Orphanage() {
     api.get(`orphanages/${params.id}`).then(response => {
       setOrphanage(response.data);
     });
+    setIsDarkMode(localStorage.getItem('darkMode') === 'true');
   }, [params.id]);
   
   if(!orphanage) {
     return <p>Carregando...</p>
   }
+  
+  function handleDarkModeButton() {
+    setIsDarkMode(!isDarkMode);
+    localStorage.setItem('darkMode', String(!isDarkMode));
+  }
+
 
 
   return (
     <div id="page-orphanage">
-      <Sidebar />
+      <Sidebar isDarkMode={isDarkMode} handleDarkModeButton={handleDarkModeButton}/>
 
       <main>
         <div className="orphanage-details">

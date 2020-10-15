@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'; 
 
@@ -12,6 +12,18 @@ import Sidebar from "../components/Sidebar";
 import api from "../services/api";
 
 export default function CreateOrphanage() {
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setIsDarkMode(localStorage.getItem('darkMode') === 'true');
+  }, [])
+  
+  function handleDarkModeButton() {
+    setIsDarkMode(!isDarkMode);
+    localStorage.setItem('darkMode', String(!isDarkMode));
+  }
+
   const history = useHistory();
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0 });
 
@@ -72,8 +84,8 @@ export default function CreateOrphanage() {
   }
 
   return (
-    <div id="page-create-orphanage">
-      <Sidebar />
+    <div id="page-create-orphanage" className={isDarkMode ? 'dark' : ''}>
+      <Sidebar isDarkMode={isDarkMode} handleDarkModeButton={handleDarkModeButton}/>
 
       <main>
         <form 
@@ -90,7 +102,7 @@ export default function CreateOrphanage() {
               onClick={handleMapClick}
             >
               <TileLayer 
-                url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                url={`https://api.mapbox.com/styles/v1/mapbox/${isDarkMode ? 'dark' : 'light'}-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
               />
 
               { position.latitude!== 0 && (

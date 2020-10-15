@@ -1,0 +1,35 @@
+.changeDarkMode {
+  width: 75px;
+  height: 24px;
+  position: relative;
+  background: #ccc;
+  border-radius: 20px;
+  margin: 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.changeDarkMode .icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: none;
+  padding: 5px 0;
+  width: 50px;
+  border-radius: 20px;
+  background: #fff;
+}
+
+
+.changeDarkMode .icon.active {
+  display: block;
+}
+
+.changeDarkMode .moon.active{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: auto;
+}
