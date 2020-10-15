@@ -54,7 +54,7 @@ export default function Orphanage() {
 
 
   return (
-    <div id="page-orphanage">
+    <div id="page-orphanage" className={`${isDarkMode ? 'dark' : ''}`}>
       <Sidebar isDarkMode={isDarkMode} handleDarkModeButton={handleDarkModeButton}/>
 
       <main>
@@ -94,7 +94,7 @@ export default function Orphanage() {
                 doubleClickZoom={false}
               >
                 <TileLayer 
-                  url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                  url={`https://api.mapbox.com/styles/v1/mapbox/${isDarkMode ? 'dark' : 'light'}-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
                 />
                 <Marker interactive={false} icon={happyMapIcon} position={[orphanage.latitude, orphanage.longitude]} />
               </Map>

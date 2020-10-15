@@ -7,6 +7,10 @@
   flex: 1;
 }
 
+#page-orphanage.dark main {
+  background: #111;
+}
+
 .orphanage-details {
   width: 700px;
   margin: 64px auto;
@@ -16,6 +20,11 @@
   border-radius: 20px;
 
   overflow: hidden;
+}
+
+#page-orphanage.dark .orphanage-details {
+  background: linear-gradient(329.54deg, #000000 0%, #130F40 100%);
+  border: none;
 }
 
 .orphanage-details > img {
@@ -65,13 +74,17 @@
   line-height: 54px;
   margin-bottom: 8px;
 }
-
+#page-orphanage.dark .orphanage-details .orphanage-details-content h1 {
+  color: #fff;
+}
 .orphanage-details .orphanage-details-content p {
   line-height: 28px;
   color: #5C8599;
   margin-top: 24px;
 }
-
+#page-orphanage.dark .orphanage-details .orphanage-details-content p {
+  color: #fff;
+}
 .orphanage-details .orphanage-details-content .map-container {
   margin-top: 64px;
   background: #E6F7FB;
@@ -108,7 +121,9 @@
   line-height: 46px;
   color: #4D6F80;
 }
-
+#page-orphanage.dark .orphanage-details .orphanage-details-content h2 {
+  color: #fff;
+}
 .orphanage-details .orphanage-details-content .open-details {
   margin-top: 24px;
 
