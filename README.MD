@@ -56,23 +56,36 @@ Foram utilizadas as seguintes ferramentas:
 
 ## 🧐 Como rodar
 
-1. Clone o repo na sua pasta de preferência.
+* **Backend**
+  1. Clone o repo na sua pasta de preferência.
 
-2. Acesse a pasta backend pelo terminal.
+  2. Acesse a pasta backend pelo terminal.
 
-3. Instale as dependências com `npm install`.
+  3. Instale as dependências com `npm install`.
 
-4. Execute `npm run typeorm -- migration:run`.
+  4. Execute `npm run typeorm -- migration:run`.
 
-5. E então, execute `npm start`.
+  5. E então, execute `npm start`.
 
-6. Mantenha esse terminal aberto e abra um novo.
+* **Web Frontend**
+  1. Com o terminal anterior aberto.
 
-7. Com o novo terminal, navegue até a pasta web.
+  2. Abra um novo terminal, navegue até a pasta web.
 
-8. Execute `npm install`.
+  3. Execute `npm install`.
 
-9. E então, execute `npm start`.
+  4. E então, execute `npm start`.
+
+* **Mobile Frontend**
+  1. Mantenha o terminal do backend aberto
+
+  2. Com um novo terminal, acessa a pasta mobile.
+
+  3. Execute `npm install`.
+
+  4. Ao finalizar a instalação, execute `npm start`
+
+  5. Aponte a camera do expo, para o QR Code no site que irá abrir. 
 
 ---
 
