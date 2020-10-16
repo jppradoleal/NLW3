@@ -12,20 +12,30 @@ export class createUser1602810088577 implements MigrationInterface {
                     unsigned: true,
                     isPrimary: true,
                     isGenerated: true,
-                    generationStrategy: "increment"
+                    generationStrategy: 'increment',
                 },
                 {
                   name: 'name',
-                  type: 'string'
+                  type: 'string',
                 },
                 {
                   name: 'email',
                   type: 'varchar',
-                  isUnique: true
+                  isUnique: true,
                 },
                 {
                   name: 'password',
-                  type: 'varchar'
+                  type: 'varchar',
+                },
+                {
+                  name: 'passwordResetToken',
+                  type: 'varchar',
+                  isNullable: true,
+                },
+                {
+                  name: 'passwordResetExpires',
+                  type: 'date',
+                  isNullable: true,
                 },
             ]
 

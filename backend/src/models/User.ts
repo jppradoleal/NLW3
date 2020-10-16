@@ -15,6 +15,12 @@ export default class User {
     @Column()
     password: string;
 
+    @Column()
+    passwordResetToken: string;
+
+    @Column()
+    passwordResetExpires: Date;
+
     @OneToMany(() => Orphanage, orphanage => orphanage.user, {
       cascade: ['insert', 'update']
     })
