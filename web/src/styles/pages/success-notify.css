@@ -1,0 +1,54 @@
+#success-page {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  background: #37C77F;
+  padding: 0 200px;
+}
+
+#success-page .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  text-align: center;
+}
+
+#success-page .text-container h1 {
+  font-size: 80px;
+  font-weight: 800;
+}
+#success-page .text-container p {
+  font-size: 24;
+  font-weight: 600;
+  width: 55%;
+  margin-top: 32px;
+}
+
+#success-page .text-container button {
+  margin-top: 60px;
+
+  width: 243px;
+  height: 64px;
+  background: #31B272;
+  border: 0;
+  border-radius: 20px;
+
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+
+  transition: background .2s;
+  cursor: pointer;
+}
+
+#success-page .text-container button:hover {
+  background: #3BD689;
+}

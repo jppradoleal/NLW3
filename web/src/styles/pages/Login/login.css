@@ -1,0 +1,156 @@
+#page-login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+
+  justify-content: space-between;
+
+  background: linear-gradient(329.54deg, #29B6D1 0%, #00C7C7 100%);
+}
+
+#page-login .banner {
+  display: flex;
+  flex-direction: column;
+  
+  justify-content: space-evenly;
+  align-items: center;
+  
+  width: 100%;
+}
+
+#page-login .banner .location{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  font-size: 24px;
+}
+
+#page-login .banner .location strong{
+  font-weight: 800;
+}
+
+#page-login .banner .location span{
+  font-weight: 600;
+}
+
+#page-login .loginArea {
+  position: relative;
+  height: 100vh;
+  background: #FFF;
+  padding: 40px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 520px;
+}
+#page-login .loginArea button.goBackButton{
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 48px;
+  height: 48px;
+  background: #EBF2F5;  
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#page-login .loginArea h1{
+  font-size: 32px;
+  color: #5C8599;
+  margin-bottom: 40px;
+  font-weight: 800;
+}
+
+#page-login .loginArea form{
+  display: flex;
+  flex-direction: column;
+  color: #8FA7B3;
+}
+
+#page-login .loginArea form input{
+  background: #F5F8FA;
+  border: 1px solid #D3E2E5;
+  border-radius: 20px;
+  height: 64px;
+  padding: 5px 20px;
+}
+
+#page-login .loginArea form label, a{
+  font-size: 16px;
+  font-weight: 600;
+}
+#page-login .loginArea form label:nth-child(3){
+  margin-top: 15px;
+}
+
+#page-login .loginArea form footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+#page-login .loginArea form footer a{
+  text-decoration: none;
+  color: #8FA7B3;
+}
+
+#page-login .loginArea form footer .checkbox-remember{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#page-login .loginArea form footer .checkbox-remember input{
+  display: none;
+}
+
+#page-login .loginArea form footer .checkbox-remember label{
+  position: relative;
+  padding-left: 30px;
+  user-select: none;
+}
+
+#page-login .loginArea form footer .checkbox-remember label span{
+  position: absolute;
+  left: 0;
+  
+  width: 24px;
+  height: 24px;
+  
+  border: 1px solid #D3E2E5;
+  border-radius: 8px;
+}
+
+#page-login .loginArea form footer .checkbox-remember input:checked+label span {
+  background: #37C77F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#page-login .loginArea form button{
+  height: 64px;
+  margin-top: 24px;
+  
+  background: #37C77F;
+  color: #fff;
+
+  border-radius: 20px;
+  border: 0;
+}
+#page-login .loginArea form button:hover:not(:disabled){
+  background: #3BD689;
+}
+
+#page-login .loginArea form button:disabled{
+  opacity: .5;
+}
