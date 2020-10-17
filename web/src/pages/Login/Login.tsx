@@ -1,9 +1,10 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useContext } from 'react';
 import logotipo from '../../images/Logotipo.svg';
 import { FiArrowLeft, FiCheck } from 'react-icons/fi'
 import '../../styles/pages/Login/login.css'
 import { Link, useHistory } from 'react-router-dom';
 import api from '../../services/api';
+import { UserContext } from '../../App';
 
 export default function Login() {
   const history = useHistory();
@@ -12,10 +13,23 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
 
-  function handleSubmit(event:FormEvent) {
+  const {setToken} = useContext(UserContext)
+
+  async function handleSubmit(event:FormEvent) {
     event.preventDefault();
 
-    api.post('')
+    try {
+      const response = await api.post('/login', { 
+        email, password
+      })
+      
+      const { receivedToken } = response.data;
+      if(remember) await localStorage.setItem('token', receivedToken)
+      else setToken(receivedToken);
+      history.push('/dashboard');
+    } catch {
+      alert('User not found');
+    }
   }
 
   return (

@@ -23,7 +23,7 @@ function Routes() {
 
                 <Route path='/login' component={Login} />
                 <Route path='/forgot' component={Forgot} />
-                <Route path='/reset' component={Reset} />
+                <Route path='/reset/:resetToken' component={Reset} />
             </Switch>
         </BrowserRouter>
     );
