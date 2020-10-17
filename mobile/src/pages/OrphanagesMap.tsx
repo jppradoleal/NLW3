@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Feather } from '@expo/vector-icons';
+import * as Location from 'expo-location';
 
 import mapMarker from '../images/mapMarker.png';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import api from '../services/api';
+import AsyncStorage from '@react-native-community/async-storage';
 
 interface Orphanage {
   id: number;
@@ -20,6 +22,38 @@ export default function OrphanagesMap() {
   const navigation = useNavigation();
 
   const [ orphanages, setOrphanages ] = useState<Orphanage[]>([]);
+  const [ location, setLocation ] = useState({latitude: -23.3055, longitude: -45.967});
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if(status !== 'granted') {
+        return;
+      }
+      
+      try {
+        const location = await Location.getCurrentPositionAsync();
+
+        if(location) {
+          setLocation({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+          });
+        }
+      } catch (e) {}
+    })();
+
+    async function handleOnboard() {
+      const hasOnboarded = await AsyncStorage.getItem('hasOnboarded');
+  
+      console.log();
+
+      if(!Boolean(hasOnboarded)) {
+        navigation.navigate('Onboard');
+      }
+    }
+    handleOnboard();
+  }, []);
 
   useFocusEffect(() => {
     api.get('orphanages').then(response => {
@@ -40,8 +74,8 @@ export default function OrphanagesMap() {
       <MapView 
         style={styles.map} 
         initialRegion={{
-          latitude: -23.3017096,
-          longitude: -46.0086603,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.008,
           longitudeDelta: 0.008
         }}
