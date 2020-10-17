@@ -50,10 +50,16 @@ export class createOrphanages1602613219414 implements MigrationInterface {
           {
             name: 'user_id',
             type: 'integer',
-          }
+            isNullable: true,
+          },
+          {
+            name: 'approved',
+            type: 'boolean',
+            default: false,
+          },
         ], foreignKeys: [
           {
-            name: 'OrphanageOwner',
+            name: 'OrphanageApproval',
             columnNames: ['user_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],

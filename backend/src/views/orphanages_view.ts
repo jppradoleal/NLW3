@@ -14,9 +14,9 @@ export default {
             opening_hours: orphanage.opening_hours,
             open_on_weekends: orphanage.open_on_weekends,
             user: {
-                id: orphanage.user.id,
-                name: orphanage.user.name,
-                email: orphanage.user.email,
+                id: orphanage.user?.id,
+                name: orphanage.user?.name,
+                email: orphanage.user?.email,
             },
             images: ImagesView.renderMany(orphanage.images),
         }

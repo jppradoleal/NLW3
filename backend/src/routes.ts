@@ -6,13 +6,27 @@ import uploadConfig from './config/upload';
 import OrphanagesController from './Controllers/OrphanagesController'
 import UsersController from './Controllers/UsersController';
 import AuthController from './Controllers/AuthController';
+import PrivateOrphanagesController from './Controllers/PrivateOrphanagesController';
 
 const routes = Router();
 const upload = multer(uploadConfig);
 
+//Private Orphanages
+routes.post('/orphanages/approve', 
+  AuthController.authenticate,
+  PrivateOrphanagesController.approveOrphanage);
+
+routes.get('/orphanages/dashboard', 
+              AuthController.authenticate, 
+              PrivateOrphanagesController.index);
+              
+routes.get('/orphanages/dashboard/:id', 
+            AuthController.authenticate,
+            PrivateOrphanagesController.show);
+            
 routes.get('/orphanages', OrphanagesController.index);
 routes.get('/orphanages/:id', OrphanagesController.show);
-routes.post('/orphanages', AuthController.authenticate, upload.array('images'), OrphanagesController.create);
+routes.post('/orphanages', upload.array('images'), OrphanagesController.create);
 
 routes.post('/signup', UsersController.create);
 

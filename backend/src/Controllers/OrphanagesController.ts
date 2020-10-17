@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import OrphanageView from '../views/orphanages_view';
 
 import Orphanage from '../models/Orphanage';
-import User from '../models/User';
 
 declare module 'express-serve-static-core' {
     interface Request {
@@ -21,7 +20,10 @@ export default {
         const orphanagesRepository = getRepository(Orphanage);
 
         const orphanages = await orphanagesRepository.find({
-            relations: ['images', 'user']
+            relations: ['images', 'user'],
+            where: {
+                approved: true
+            }
         });
         
         return res.json(OrphanageView.renderMany(orphanages));
@@ -31,8 +33,11 @@ export default {
 
         const orphanagesRepository = getRepository(Orphanage);
 
-        const orphanage = await orphanagesRepository.findOneOrFail(id, {
-            relations: ['images', 'user']
+        const orphanage = await orphanagesRepository.findOneOrFail(id , {
+            relations: ['images', 'user'],
+            where: {
+                approved: true
+            }
         });
         
         return res.json(OrphanageView.render(orphanage));
@@ -51,11 +56,6 @@ export default {
 
         
         const orphanagesRepository = getRepository(Orphanage);
-        const userRepository = getRepository(User);
-
-        const user = await userRepository.findOne({ email: req.user.email });
-
-        const user_id = user?.id;
 
         const requestImages = req.files as Express.Multer.File[];
 
@@ -72,8 +72,8 @@ export default {
             about,
             instructions,
             opening_hours,
+            approved: false,
             open_on_weekends: open_on_weekends === true,
-            user_id: Number(user_id),
             images
         }
 
@@ -85,7 +85,7 @@ export default {
             instructions: Yup.string().required(),
             opening_hours: Yup.string().required(),
             open_on_weekends: Yup.boolean().required(),
-            user_id: Yup.number().required(),
+            approved: Yup.boolean().required(),
             images: Yup.array(
                 Yup.object().shape({
                     path: Yup.string().required()

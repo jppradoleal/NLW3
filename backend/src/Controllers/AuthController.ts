@@ -23,13 +23,15 @@ declare module 'express-serve-static-core' {
 }
 
 function YupError(errorPath: string, errorMessage: string) {
-  let err = new Yup.ValidationError([], errorPath, "user");
+  let err = new Yup.ValidationError([], errorPath, 'user');
   err.inner = [new Yup.ValidationError(errorMessage, null, errorPath)];
   return err;
 }
 
 export default {
   authenticate(req: Request, res: Response, next: NextFunction) {
+    if(req.user) return YupError('Authentication', 'Already logged in')
+    
     const token = req.headers['authorization']?.split(' ')[1]; // Bearer Token...
   
     console.log(token);
@@ -39,7 +41,7 @@ export default {
       req.user = {name: decoded.name, email: decoded.email}
       return next()
     } else {
-      throw YupError("Authentication", "User not authenticated");
+      throw YupError('Authentication', 'User not authenticated');
     }
   },
   
@@ -51,7 +53,7 @@ export default {
     const user = await userRepository.findOne({email});
     
     if(!user) {
-      throw YupError("Login", "User not found");
+      throw YupError('Login', 'User not found');
     }
     
     const passwordMatched = await bcrypt.compare(password, user.password);
@@ -62,10 +64,10 @@ export default {
         process.env.SECRET as string, 
         { expiresIn: 43200 });
       
-      return res.status(200).json({message: "Logged in", token: token});
+      return res.status(200).json({message: 'Logged in', token: token});
 
     } else {
-      throw YupError("Reset Password", "Wrong password");
+      throw YupError('Reset Password', 'Wrong password');
     }
   },
 
@@ -78,10 +80,10 @@ export default {
       const user = await userRepository.findOne({ email });
 
       if(!user) {
-        throw YupError("Forgot Password", "User not found");
+        throw YupError('Forgot Password', 'User not found');
       }
 
-      const token = crypto.randomBytes(20).toString("hex");
+      const token = crypto.randomBytes(20).toString('hex');
 
       const now = new Date();
       now.setHours(now.getHours() + 1);
@@ -101,7 +103,7 @@ export default {
 
       return res.status(200).json({message: 'Mail sent! Check your email.'})
     } catch (err) {
-      res.status(400).json({err: "Failed, try again!"})
+      res.status(400).json({err: 'Failed, try again!'})
     }
   },
 
@@ -115,13 +117,13 @@ export default {
     const newPassword = await bcrypt.hash(password, 5);
 
     if(!user)
-      throw YupError("Reset Password", "User not found");
+      throw YupError('Reset Password', 'User not found');
 
     if(token !== user.passwordResetToken) 
-      throw YupError("Reset Password", "Token mismatch");
+      throw YupError('Reset Password', 'Token mismatch');
 
     if(new Date() > user.passwordResetExpires)
-      throw YupError("Reset Password", "Token expired");
+      throw YupError('Reset Password', 'Token expired');
 
     userRepository.update({ email }, {
       passwordResetToken: '',
