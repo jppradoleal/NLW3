@@ -9,6 +9,7 @@ import SuccessNotify from './pages/SuccessNotify';
 import Login from './pages/Login/Login';
 import Forgot from './pages/Login/Forgot';
 import Reset from './pages/Login/Reset';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function Routes() {
     return (
@@ -24,6 +25,9 @@ function Routes() {
                 <Route path='/login' component={Login} />
                 <Route path='/forgot' component={Forgot} />
                 <Route path='/reset/:resetToken' component={Reset} />
+
+                <Route path='/dashboard' component={Dashboard} />
+                <Route path='/dashboard/:approved' component={Dashboard} />
             </Switch>
         </BrowserRouter>
     );

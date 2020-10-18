@@ -41,3 +41,25 @@ aside.app-sidebar footer a:hover,
 aside.app-sidebar footer button:hover {
   background: #F9AE16;
 }
+
+aside.app-sidebar .icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 110px;
+}
+
+aside.app-sidebar .icons button, .inactive {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  border: none;
+  background: #12AFCB;
+}
+
+aside.app-sidebar .icons button.active {
+  background-color: #FFD666;
+}

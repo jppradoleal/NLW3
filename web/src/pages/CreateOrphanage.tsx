@@ -85,7 +85,7 @@ export default function CreateOrphanage() {
 
   return (
     <div id="page-create-orphanage" className={isDarkMode ? 'dark' : ''}>
-      <Sidebar isDarkMode={isDarkMode} handleDarkModeButton={handleDarkModeButton}/>
+      <Sidebar isDarkMode={isDarkMode} handleDarkModeButton={handleDarkModeButton} />
 
       <main>
         <form 
