@@ -1,0 +1,62 @@
+#page-dashboard {
+  width: 100vw;
+  height: 100vh;
+  background: #EBF2F5;
+}
+#page-dashboard .orphanages-listing {
+  margin-left: 100px;
+  padding: 20px 96px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+#page-dashboard .orphanages-listing .card {
+  width: 544px;
+  height: 309px;
+  border-radius: 20px;
+  background: #fff;
+}
+
+#page-dashboard .orphanages-listing .card header{
+  width: 100%;
+  height: 75%;
+  border-radius: 20px;
+}
+
+#page-dashboard .orphanages-listing .card header .leaflet-container{
+  border-radius: 20px;
+}
+
+#page-dashboard .orphanages-listing .card footer{
+  height: 25%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 20px;
+}
+
+#page-dashboard .orphanages-listing .card footer h1{
+  color: #4D6F80;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+#page-dashboard .orphanages-listing .card footer .card-button-group{
+  display: flex;
+  width: 100px;
+  justify-content: space-between;
+}
+
+#page-dashboard .orphanages-listing .card footer button{
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #EBF2F5;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}

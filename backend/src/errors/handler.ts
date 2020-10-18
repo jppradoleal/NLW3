@@ -1,5 +1,6 @@
 import { ErrorRequestHandler } from 'express';
 import { ValidationError } from 'yup';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 interface ValidationErrors {
     [key: string]: string[]
@@ -15,7 +16,13 @@ const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
 
         return res.status(400).json({ message: 'Validation fails', errors})
     }
+
+    if(error instanceof TokenExpiredError) {
+        return res.status(400).json({ error: 'Your token has expired'})
+    }
     
+
+
     console.error(error);
 
     return res.status(500).json({ message: 'Internal server error' })

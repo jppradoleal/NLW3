@@ -58,8 +58,10 @@ aside.app-sidebar .icons button, .inactive {
   border-radius: 16px;
   border: none;
   background: #12AFCB;
+  cursor: pointer;
 }
 
 aside.app-sidebar .icons button.active {
   background-color: #FFD666;
+  cursor: pointer;
 }

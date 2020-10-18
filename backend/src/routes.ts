@@ -11,6 +11,9 @@ import PrivateOrphanagesController from './Controllers/PrivateOrphanagesControll
 const routes = Router();
 const upload = multer(uploadConfig);
 
+routes.get('/orphanages', OrphanagesController.index);
+routes.post('/orphanages', upload.array('images'), OrphanagesController.create);
+
 //Private Orphanages
 routes.post('/orphanages/approve', 
   AuthController.authenticate,
@@ -23,10 +26,11 @@ routes.get('/orphanages/dashboard',
 routes.get('/orphanages/dashboard/:id', 
             AuthController.authenticate,
             PrivateOrphanagesController.show);
-            
-routes.get('/orphanages', OrphanagesController.index);
+
+routes.delete('/orphanages/delete', AuthController.authenticate, OrphanagesController.delete);
+routes.put('/orphanages/update', AuthController.authenticate, OrphanagesController.update);
+
 routes.get('/orphanages/:id', OrphanagesController.show);
-routes.post('/orphanages', upload.array('images'), OrphanagesController.create);
 
 routes.post('/signup', UsersController.create);
 

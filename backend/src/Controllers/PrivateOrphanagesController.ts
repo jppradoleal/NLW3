@@ -46,5 +46,5 @@ export default {
         });
         
         return res.json(OrphanageView.render(orphanage));
-    }
+    },
 }

@@ -6,10 +6,6 @@ import bcrypt from 'bcrypt';
 import User from '../models/User';
 
 export default {
-    async show(req: Request, res: Response) {
-
-    },
-
     async create(req: Request, res: Response) {
         const userRepository = getRepository(User);
 

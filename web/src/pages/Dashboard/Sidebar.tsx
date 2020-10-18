@@ -3,20 +3,23 @@ import { FiMapPin, FiAlertCircle, FiPower } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import mapMarkerImg from '../../images/map-marker.svg';
 
-import { UserContext } from '../../App';
+import UserContext from '../../context/UserContext';
 
 import '../../styles/components/sidebar.css';
 
-export default function Sidebar() {
+interface Props {
+  isOnApproved: boolean;
+}
+
+export default function Sidebar({ isOnApproved }: Props) {
   const { push } = useHistory();
 
-  const {token, setToken} = useContext(UserContext);
-
-  const [isOnApproved, setIsOnApproved] = useState(true);
+  const {setToken} = useContext(UserContext);
 
   function handleLogout() {
     localStorage.removeItem('token');
     setToken('');
+    push('/app')
   }
 
 
@@ -26,16 +29,14 @@ export default function Sidebar() {
 
       <div className="icons">
         <button onClick={() => {
-            setIsOnApproved(true)
-            push('/dashboard')
+            push('/dashboard/approved')
           }}
           className={isOnApproved ? 'active' : ''}
         >
           <FiMapPin size={24} color="#FFFFFF" />
         </button>
         <button onClick={() => {
-            setIsOnApproved(false)
-            push('/dashboard/unapproved')
+            push('/dashboard')
           }}
 
           className={!isOnApproved ? 'active' : ''}
