@@ -24,7 +24,7 @@ export default function DashboardPending() {
 
   useEffect(() => {
     if(!token) {
-      //history.push('/login');
+      history.push('/login');
     }
 
     (async function getOrphanages() {
@@ -35,7 +35,7 @@ export default function DashboardPending() {
       });
       setOrphanages(response.data);
     })();
-  }, [token])
+  }, [token, history]);
 
   return (
     <div id="page-dashboard">

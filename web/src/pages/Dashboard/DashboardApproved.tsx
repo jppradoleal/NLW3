@@ -25,7 +25,7 @@ export default function DashboardApproved() {
 
   useEffect(() => {
     if(!token) {
-      //history.push('/login');
+      history.push('/login');
     }
 
     api.get('/orphanages').then(response => {
@@ -70,7 +70,7 @@ export default function DashboardApproved() {
                     {orphanage.name}
                   </h1>
                   <div className="card-button-group">
-                    <button>
+                    <button onClick={() => history.push(`/dashboard/approved/${orphanage.id}`)}>
                       <FiEdit3 size={24} color="#29B6D1" />
                     </button>
                     <button>

@@ -122,14 +122,6 @@ export default {
 
         const orphanagesRepository = getRepository(Orphanage);
 
-        const requestImages = req.files as Express.Multer.File[];
-
-        const images = requestImages.map(image => {
-            return {
-                path: image.filename
-            }
-        });
-
         const data = {
             id: Number(id),
             name,
@@ -141,7 +133,6 @@ export default {
             whatsapp,
             approved: false,
             open_on_weekends: open_on_weekends === true,
-            //images
         }
 
         const schema = Yup.object().shape({
@@ -155,11 +146,6 @@ export default {
             open_on_weekends: Yup.boolean().required(),
             whatsapp: Yup.number().required(),
             approved: Yup.boolean().required(),
-            images: Yup.array(
-                Yup.object().shape({
-                    path: Yup.string().required()
-                })
-            )
         });
 
         await schema.validate(data, {

@@ -13,6 +13,7 @@ import Forgot from './pages/Login/Forgot';
 import Reset from './pages/Login/Reset';
 import DashboardPending from './pages/Dashboard/DashboardPending';
 import DashboardApproved from './pages/Dashboard/DashboardApproved';
+import UpdateOrphanage from './pages/Dashboard/UpdateOrphanage';
 
 function Routes() {
     const [token, setToken] = useState('');
@@ -36,6 +37,7 @@ function Routes() {
                     <Route path='/forgot' component={Forgot} />
                     <Route path='/reset/:resetToken' component={Reset} />
 
+                    <Route path='/dashboard/approved/:id' component={UpdateOrphanage} />
                     <Route path='/dashboard/approved' component={DashboardApproved} />
                     <Route path='/dashboard' component={DashboardPending} />
                 </Switch>

@@ -1,13 +1,12 @@
-import React, { useState, useEffect, FormEvent, ChangeEvent, useContext } from 'react';
+import React, { useState, useEffect, FormEvent, useContext } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'; 
 
-import { FiPlus } from 'react-icons/fi';
 import { useHistory, useParams } from "react-router-dom";
 
 import happyMapIcon from '../../utils/mapIcon';
 
-import '../styles/pages/create-orphanage.css';
+import '../../styles/pages/create-orphanage.css';
 import Sidebar from "./Sidebar";
 import api from "../../services/api";
 import UserContext from '../../context/UserContext';
@@ -16,7 +15,12 @@ interface UpdateParams {
   id: string;
 }
 
-export default function CreateOrphanage() {
+interface ImageInterface {
+  id: string;
+  url: string;
+}
+
+export default function Update() {
   const { id } = useParams<UpdateParams>();
 
   const { token } = useContext(UserContext);
@@ -30,8 +34,7 @@ export default function CreateOrphanage() {
   const [opening_hours, setOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
   const [whatsapp, setWhatsapp] = useState('');
-  const [images, setImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImageInterface[]>([]);
 
   function handleMapClick(event: LeafletMouseEvent) {
     const {lat, lng} = event.latlng;
@@ -42,48 +45,63 @@ export default function CreateOrphanage() {
     })
   }
 
-  function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
-    if(!event.target.files) {
-      return;
-    }
-
-    const selectedImages = Array.from(event.target.files); 
-
-    setImages(selectedImages);
-
-    const selectedImagesPreview = selectedImages.map(image => URL.createObjectURL(image));
-
-    setPreviewImages(selectedImagesPreview);
-  }
-
   useEffect(() => {
-    api.get(`/orphanages/${id}`).then(response => {
-      
-    });
-  }, [])
+      api.get(`/orphanages/${id}`).then(response => {
+        const {
+          name,
+          latitude,
+          longitude,
+          about,
+          instructions,
+          opening_hours,
+          open_on_weekends,
+          whatsapp,
+          images
+        } = response.data;
 
-  async function handleSubmit(event:FormEvent) {
+        setName(name);
+        setPosition({
+          latitude,
+          longitude
+        })
+        setAbout(about);
+        setInstructions(instructions);
+        setOpeningHours(opening_hours);
+        setOpenOnWeekends(open_on_weekends);
+        setWhatsapp(whatsapp);
+        setImages(images);  
+      }).catch(error => {
+        console.log(error);
+      })
+  }, [id]);
+
+  function handleSubmit(event:FormEvent) {
     event.preventDefault();
 
     const { latitude, longitude } = position;
 
-    const data = new FormData();
-
-    data.append('name', name);
-    data.append('about', about);
-    data.append('latitude', String(latitude));
-    data.append('longitude', String(longitude));
-    data.append('instructions', instructions);
-    data.append('opening_hours', opening_hours);
-    data.append('open_on_weekends', String(open_on_weekends));
-    images.forEach(image => {
-      data.append('images', image);
+    const data = {
+      id,
+      name,
+      about,
+      whatsapp,
+      latitude,
+      longitude,
+      instructions,
+      opening_hours,
+      open_on_weekends,
+    }
+    api.put('orphanages/update', data, {
+      headers: {
+        'Authorization': 'Bearer ' + String(token)
+      }
+    }).then(() => {
+      alert('Cadastro atualizado com sucesso');
+      history.push('/dashboard/approved');
+    }).catch(error => {
+      console.log(error.response);
     })
 
-    await api.post('orphanages', data);
-
-    alert('Cadastro atualizado com sucesso');
-    history.push('/dashboard/approved');
 
   }
 
@@ -145,17 +163,13 @@ export default function CreateOrphanage() {
 
               <div className="images-container">
                 {
-                  previewImages.map(image => {
+                  images.map(image => {
                     return (
-                      <img src={image} alt={name} key={image} />
+                      <img src={image.url} alt={name} key={image.id} />
                     )
                   })
                 }
-                <label className="new-image" htmlFor="image[]">
-                  <FiPlus size={24} color="#15b6d6" />
-                </label>
               </div>
-              <input type="file" id="image[]" multiple onChange={handleSelectImages}/>
             </div>
           </fieldset>
 
