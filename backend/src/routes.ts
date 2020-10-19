@@ -28,7 +28,10 @@ routes.get('/orphanages/dashboard/:id',
             PrivateOrphanagesController.show);
 
 routes.delete('/orphanages/delete', AuthController.authenticate, OrphanagesController.delete);
-routes.put('/orphanages/update', AuthController.authenticate, OrphanagesController.update);
+routes.put('/orphanages/update', 
+            AuthController.authenticate, 
+            upload.array('images'),
+            OrphanagesController.update);
 
 routes.get('/orphanages/:id', OrphanagesController.show);
 

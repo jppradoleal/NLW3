@@ -68,7 +68,7 @@ export class createOrphanages1602613219414 implements MigrationInterface {
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
-            onDelete: 'CASCADE'
+            onDelete: 'CASCADE',
           }
         ]
       }))

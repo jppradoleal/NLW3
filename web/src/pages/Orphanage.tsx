@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import { FaWhatsapp } from 'react-icons/fa';
 import { FiClock, FiInfo } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { useParams } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ import api from '../services/api';
 interface Orphanage {
   name: string;
   about: string;
+  whatsapp: string;
   instructions: string;
   opening_hours: string;
   open_on_weekends: string;
@@ -133,11 +135,11 @@ export default function Orphanage() {
                 </div>
               )}
             </div>
-
-            {/* <button type="button" className="contact-button">
+{/*  */}
+            <a href={`http://wa.me/send?phone=+55${orphanage.whatsapp}&text=Oi,gostaria%20de%20visita-los`} className="contact-button">
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
-            </button> */}
+            </a>
           </div>
         </div>
       </main>

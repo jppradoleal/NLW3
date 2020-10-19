@@ -1,29 +1,26 @@
-import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import React, { useState, useEffect, FormEvent, ChangeEvent, useContext } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'; 
 
 import { FiPlus } from 'react-icons/fi';
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-import happyMapIcon from '../utils/mapIcon';
+import happyMapIcon from '../../utils/mapIcon';
 
 import '../styles/pages/create-orphanage.css';
-import Sidebar from "../components/Sidebar";
-import api from "../services/api";
+import Sidebar from "./Sidebar";
+import api from "../../services/api";
+import UserContext from '../../context/UserContext';
+
+interface UpdateParams {
+  id: string;
+}
 
 export default function CreateOrphanage() {
+  const { id } = useParams<UpdateParams>();
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    setIsDarkMode(localStorage.getItem('darkMode') === 'true');
-  }, [])
+  const { token } = useContext(UserContext);
   
-  function handleDarkModeButton() {
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem('darkMode', String(!isDarkMode));
-  }
-
   const history = useHistory();
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0 });
 
@@ -59,6 +56,12 @@ export default function CreateOrphanage() {
     setPreviewImages(selectedImagesPreview);
   }
 
+  useEffect(() => {
+    api.get(`/orphanages/${id}`).then(response => {
+      
+    });
+  }, [])
+
   async function handleSubmit(event:FormEvent) {
     event.preventDefault();
 
@@ -68,7 +71,6 @@ export default function CreateOrphanage() {
 
     data.append('name', name);
     data.append('about', about);
-    data.append('whatsapp', whatsapp);
     data.append('latitude', String(latitude));
     data.append('longitude', String(longitude));
     data.append('instructions', instructions);
@@ -80,14 +82,14 @@ export default function CreateOrphanage() {
 
     await api.post('orphanages', data);
 
-    alert('Cadastro realizado com sucesso');
-    history.push('/orphanages/create/success');
+    alert('Cadastro atualizado com sucesso');
+    history.push('/dashboard/approved');
 
   }
 
   return (
-    <div id="page-create-orphanage" className={isDarkMode ? 'dark' : ''}>
-      <Sidebar isDarkMode={isDarkMode} handleDarkModeButton={handleDarkModeButton} />
+    <div id="page-create-orphanage">
+      <Sidebar isOnApproved={true}/>
 
       <main>
         <form 
@@ -104,7 +106,7 @@ export default function CreateOrphanage() {
               onClick={handleMapClick}
             >
               <TileLayer 
-                url={`https://api.mapbox.com/styles/v1/mapbox/${isDarkMode ? 'dark' : 'light'}-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
               />
 
               { position.latitude!== 0 && (

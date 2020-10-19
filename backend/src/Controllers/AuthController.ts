@@ -34,8 +34,6 @@ export default {
     
     const token = req.headers['authorization']?.split(' ')[1]; // Bearer Token...
   
-    console.log(token);
-  
     if(token) {
       const decoded = jwt.verify(token, process.env.SECRET as string) as LoggedInUser;
       req.user = {name: decoded.name, email: decoded.email}

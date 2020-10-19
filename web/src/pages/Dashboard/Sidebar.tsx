@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { FiMapPin, FiAlertCircle, FiPower } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import mapMarkerImg from '../../images/map-marker.svg';

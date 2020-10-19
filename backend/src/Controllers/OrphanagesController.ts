@@ -120,7 +120,6 @@ export default {
             open_on_weekends
         } = req.body;
 
-        
         const orphanagesRepository = getRepository(Orphanage);
 
         const requestImages = req.files as Express.Multer.File[];
@@ -132,6 +131,7 @@ export default {
         });
 
         const data = {
+            id: Number(id),
             name,
             latitude,
             longitude,
@@ -145,6 +145,7 @@ export default {
         }
 
         const schema = Yup.object().shape({
+            id: Yup.number().required(),
             name: Yup.string().required(),
             latitude: Yup.number().required(),
             longitude: Yup.number().required(),
@@ -165,9 +166,9 @@ export default {
             abortEarly: false
         });
 
-        const orphanage = await orphanagesRepository.update({ id }, data);
+        await orphanagesRepository.save(data);
 
-        return res.json(orphanage);
+        return res.json(data);
     },
 
     async delete(req: Request, res: Response) {
