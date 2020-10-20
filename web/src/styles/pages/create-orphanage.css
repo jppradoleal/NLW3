@@ -8,11 +8,18 @@
 
 #page-create-orphanage.dark main {
   background: #111;
+  display: flex;
+}
+
+main p {
+  margin: 64px auto 16px;
+  width: 700px;
+  color: #5C8599;
 }
 
 form.create-orphanage-form {
   width: 700px;
-  margin: 64px auto;
+  margin: 0 auto;
 
   background: #FFFFFF;
   border: 1px solid #D3E2E5;

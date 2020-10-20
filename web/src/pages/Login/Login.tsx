@@ -5,6 +5,7 @@ import '../../styles/pages/Login/login.css'
 import { Link, useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import UserContext from '../../context/UserContext';
+import { motion } from 'framer-motion';
 
 export default function Login() {
   const history = useHistory();
@@ -24,6 +25,8 @@ export default function Login() {
       })
       
       const { token: receivedToken } = response.data;
+      console.log(receivedToken);
+
       if(remember) {
         await localStorage.setItem('token', receivedToken)
       }
@@ -35,15 +38,29 @@ export default function Login() {
   }
 
   return (
-      <div id="page-login">
-        <div className="banner">
-          <img src={logotipo} alt="happy"/>
+      <div id="page-login" style={{overflowX: 'hidden'}}>
+        <motion.div 
+          className="banner"
+          initial={{scale: 0, opacity: 0}}
+          animate={{scale: 1, opacity: 1}}
+          transition={{duration: 1}}
+        >
+          <img 
+            src={logotipo} 
+            alt="happy"
+          />
           <div className="location">
             <strong>Jacareí</strong>
             <span>São Paulo</span>
           </div>
-        </div>
-        <aside className="loginArea">
+        </motion.div>
+        <motion.aside 
+          className="loginArea"
+
+          initial={{opacity: 0, x: 500}}
+          animate={{opacity: 1, x: 0}}
+          transition={{duration: 1, type: 'tween'}}
+        >
           <button className="goBackButton" onClick={() => history.push('/app')}>
             <FiArrowLeft size={24} color="#15C3D6" className="icon"/>
           </button>
@@ -85,7 +102,7 @@ export default function Login() {
 
             <button disabled={!(password && email)}>Entrar</button>
           </form>
-        </aside>
+        </motion.aside>
       </div>
   );
 };

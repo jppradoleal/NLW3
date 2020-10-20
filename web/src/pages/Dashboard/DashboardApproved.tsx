@@ -10,6 +10,7 @@ import Sidebar from './Sidebar';
 import '../../styles/pages/dashboard.css';
 import api from '../../services/api';
 import Orphanage from '../Orphanage';
+import { motion } from 'framer-motion';
 
 interface Orphanage {
   id: number;
@@ -39,9 +40,15 @@ export default function DashboardApproved() {
       <div className="orphanages-listing">
 
       {/* Cada card aprovado tem um mapa, um h1, um botão de editar, e um botão de deletar */}
-          {orphanages.map(orphanage => {
+          {orphanages.map((orphanage, index) => {
             return (
-              <div className="card" key={orphanage.id}>
+              <motion.div 
+                className="card" 
+                key={orphanage.id} 
+                initial={{opacity: 0, y: -100}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: index/1.7+.5}}
+              >
                 <header className="card-header">
                 <Map
                     center= {[orphanage.latitude,orphanage.longitude]}
@@ -51,7 +58,8 @@ export default function DashboardApproved() {
                       height: "100%"
                     }}
                     dragging={false}
-                    zoomControl={false}                
+                    zoomControl={false}   
+                    scrollWheelZoom={false}             
                   >
                       {/* <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
                     <TileLayer 
@@ -70,15 +78,20 @@ export default function DashboardApproved() {
                     {orphanage.name}
                   </h1>
                   <div className="card-button-group">
-                    <button onClick={() => history.push(`/dashboard/approved/${orphanage.id}`)}>
+                    <button onClick={() => history.push(`/dashboard/approved/${orphanage.id}`, { pending: false })}>
                       <FiEdit3 size={24} color="#29B6D1" />
                     </button>
-                    <button>
+                    <button onClick={() => {
+                      history.push(`/dashboard/delete`, {
+                        id: orphanage.id, 
+                        name: orphanage.name
+                      });
+                    }}>
                       <FiTrash size={24} color="#29B6D1" />
                     </button>
                   </div>
                 </footer>
-              </div>
+              </motion.div>
             )
           })}
       </div>

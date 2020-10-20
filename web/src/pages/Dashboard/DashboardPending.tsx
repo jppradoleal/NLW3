@@ -9,6 +9,7 @@ import Sidebar from './Sidebar';
 
 import '../../styles/pages/dashboard.css';
 import api from '../../services/api';
+import { motion } from 'framer-motion';
 
 interface Orphanage {
   id: number;
@@ -23,18 +24,16 @@ export default function DashboardPending() {
   const history = useHistory();
 
   useEffect(() => {
-    if(!token) {
-      history.push('/login');
-    }
-
-    (async function getOrphanages() {
-      const response = await api.get('orphanages/dashboard', {
-        headers: {
-          'Authorization': 'Bearer ' + String(token)
-        }
-      });
+    api.get('orphanages/dashboard', {
+      headers: {
+        'Authorization': 'Bearer ' + String(token)
+      }
+    }).then(response => {
       setOrphanages(response.data);
-    })();
+    }).catch(error => {
+      console.error(error.response);
+      history.push('/login');
+    });
   }, [token, history]);
 
   return (
@@ -43,9 +42,15 @@ export default function DashboardPending() {
       <div className="orphanages-listing">
 
       {/* Cada card aprovado tem um mapa, um h1, um botão de editar, e um botão de deletar */}
-          {orphanages.map(orphanage => {
+          {orphanages.map((orphanage, index) => {
             return (
-              <div className="card" key={orphanage.id}>
+              <motion.div 
+                className="card" 
+                key={orphanage.id}
+                initial={{opacity: 0, y: -100}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: index/1.7+.5}}
+              >
                 <header className="card-header">
                 <Map
                     center= {[orphanage.latitude,orphanage.longitude]}
@@ -55,7 +60,8 @@ export default function DashboardPending() {
                       height: "100%"
                     }}
                     dragging={false}
-                    zoomControl={false}                
+                    zoomControl={false}
+                    scrollWheelZoom={false}                
                   >
                       {/* <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
                     <TileLayer 
@@ -73,11 +79,11 @@ export default function DashboardPending() {
                   <h1>
                     {orphanage.name}
                   </h1>
-                  <button>
+                  <button onClick={() => history.push(`/dashboard/approved/${orphanage.id}`, {pending: true})}>
                     <FiArrowRight size={24} color="#29B6D1" />
                   </button>
                 </footer>
-              </div>
+              </motion.div>
             )
           })}
       </div>

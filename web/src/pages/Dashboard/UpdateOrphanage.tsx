@@ -2,14 +2,15 @@ import React, { useState, useEffect, FormEvent, useContext } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'; 
 
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import happyMapIcon from '../../utils/mapIcon';
 
 import '../../styles/pages/create-orphanage.css';
-import Sidebar from "./Sidebar";
-import api from "../../services/api";
+import Sidebar from './Sidebar';
+import api from '../../services/api';
 import UserContext from '../../context/UserContext';
+import { motion } from 'framer-motion';
 
 interface UpdateParams {
   id: string;
@@ -20,14 +21,21 @@ interface ImageInterface {
   url: string;
 }
 
+interface LocationType {
+  pending: boolean;
+}
+
 export default function Update() {
   const { id } = useParams<UpdateParams>();
+  const location = useLocation<LocationType>();
+
 
   const { token } = useContext(UserContext);
   
   const history = useHistory();
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0 });
 
+  const [oldName, setOldName] = useState('');
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
   const [instructions, setInstructions] = useState('');
@@ -46,34 +54,41 @@ export default function Update() {
   }
 
   useEffect(() => {
-      api.get(`/orphanages/${id}`).then(response => {
-        const {
-          name,
-          latitude,
-          longitude,
-          about,
-          instructions,
-          opening_hours,
-          open_on_weekends,
-          whatsapp,
-          images
-        } = response.data;
-
-        setName(name);
-        setPosition({
-          latitude,
-          longitude
-        })
-        setAbout(about);
-        setInstructions(instructions);
-        setOpeningHours(opening_hours);
-        setOpenOnWeekends(open_on_weekends);
-        setWhatsapp(whatsapp);
-        setImages(images);  
-      }).catch(error => {
-        console.log(error);
+      api.get(!location.state.pending ? `/orphanages/${id}` : `/orphanages/dashboard/${id}`, {
+        headers: {
+          'Authorization': 'Bearer ' + String(token)
+        }
       })
-  }, [id]);
+        .then(response => {
+          const {
+            name,
+            latitude,
+            longitude,
+            about,
+            instructions,
+            opening_hours,
+            open_on_weekends,
+            whatsapp,
+            images
+          } = response.data;
+
+          setName(name);
+          setOldName(name);
+          setPosition({
+            latitude,
+            longitude
+          })
+          setAbout(about);
+          setInstructions(instructions);
+          setOpeningHours(opening_hours);
+          setOpenOnWeekends(open_on_weekends);
+          setWhatsapp(whatsapp);
+          setImages(images);  
+        }).catch(error => {
+          history.push('/dashboard');
+          console.log(error.response);
+        })
+  }, [id, history, token, location.state.pending]);
 
   function handleSubmit(event:FormEvent) {
     event.preventDefault();
@@ -100,6 +115,7 @@ export default function Update() {
       history.push('/dashboard/approved');
     }).catch(error => {
       console.log(error.response);
+      history.push('/dashboard');
     })
 
 
@@ -110,12 +126,17 @@ export default function Update() {
       <Sidebar isOnApproved={true}/>
 
       <main>
+        <p></p>
         <form 
           className="create-orphanage-form"
           onSubmit={handleSubmit}
         >
-          <fieldset>
-            <legend>Dados</legend>
+          <motion.fieldset
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 1}}
+          >
+            <legend>Atualizar o Orfanato {oldName}</legend>
 
             <Map 
               center={[position.latitude,position.longitude]} 
@@ -171,7 +192,7 @@ export default function Update() {
                 }
               </div>
             </div>
-          </fieldset>
+          </motion.fieldset>
 
           <fieldset>
             <legend>Visitação</legend>

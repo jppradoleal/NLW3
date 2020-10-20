@@ -27,7 +27,7 @@ routes.get('/orphanages/dashboard/:id',
             AuthController.authenticate,
             PrivateOrphanagesController.show);
 
-routes.delete('/orphanages/delete', AuthController.authenticate, OrphanagesController.delete);
+routes.delete('/orphanages/delete/:id', AuthController.authenticate, OrphanagesController.delete);
 routes.put('/orphanages/update', 
             AuthController.authenticate,
             OrphanagesController.update);

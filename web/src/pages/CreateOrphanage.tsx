@@ -1,40 +1,32 @@
 import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'; 
-
 import { FiPlus } from 'react-icons/fi';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import happyMapIcon from '../utils/mapIcon';
 
 import '../styles/pages/create-orphanage.css';
-import Sidebar from "../components/Sidebar";
-import api from "../services/api";
+import Sidebar from '../components/Sidebar';
+import api from '../services/api';
 
 export default function CreateOrphanage() {
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    setIsDarkMode(localStorage.getItem('darkMode') === 'true');
-  }, [])
   
-  function handleDarkModeButton() {
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem('darkMode', String(!isDarkMode));
-  }
-
   const history = useHistory();
+  
+  const [ name, setName ] = useState('');
+  const [ about, setAbout ] = useState('');
+  const [ instructions, setInstructions ] = useState('');
+  const [ opening_hours, setOpeningHours ] = useState('');
+  const [ open_on_weekends, setOpenOnWeekends ] = useState(true);
+  const [ whatsapp, setWhatsapp ] = useState('');
+  const [ images, setImages ] = useState<File[]>([]);
+  const [ previewImages, setPreviewImages ] = useState<string[]>([]);
+  const [ isDarkMode, setIsDarkMode ] = useState(false);
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0 });
-
-  const [name, setName] = useState('');
-  const [about, setAbout] = useState('');
-  const [instructions, setInstructions] = useState('');
-  const [opening_hours, setOpeningHours] = useState('');
-  const [open_on_weekends, setOpenOnWeekends] = useState(true);
-  const [whatsapp, setWhatsapp] = useState('');
-  const [images, setImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [ mapPosition, setMapPosition ] = useState({latitude: 0, longitude: 0 });
 
   function handleMapClick(event: LeafletMouseEvent) {
     const {lat, lng} = event.latlng;
@@ -43,6 +35,22 @@ export default function CreateOrphanage() {
       latitude: lat,
       longitude: lng,
     })
+  }
+
+  useEffect(() => {
+    setIsDarkMode(localStorage.getItem('darkMode') === 'true');
+
+    navigator.geolocation.getCurrentPosition((data) => {
+      const {latitude, longitude} = data.coords;
+
+      setMapPosition({latitude, longitude});
+    });
+
+  }, [])
+  
+  function handleDarkModeButton() {
+    setIsDarkMode(!isDarkMode);
+    localStorage.setItem('darkMode', String(!isDarkMode));
   }
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
@@ -94,11 +102,15 @@ export default function CreateOrphanage() {
           className="create-orphanage-form"
           onSubmit={handleSubmit}
         >
-          <fieldset>
+          <motion.fieldset
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 1}}
+          >
             <legend>Dados</legend>
 
             <Map 
-              center={[position.latitude,position.longitude]} 
+              center={[mapPosition.latitude, mapPosition.longitude]} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onClick={handleMapClick}
@@ -145,7 +157,15 @@ export default function CreateOrphanage() {
                 {
                   previewImages.map(image => {
                     return (
-                      <img src={image} alt={name} key={image} />
+                      <motion.img 
+                        src={image} 
+                        alt={name} 
+                        key={image} 
+
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        transition={{duration: 1}}
+                      />
                     )
                   })
                 }
@@ -155,9 +175,13 @@ export default function CreateOrphanage() {
               </div>
               <input type="file" id="image[]" multiple onChange={handleSelectImages}/>
             </div>
-          </fieldset>
+          </motion.fieldset>
 
-          <fieldset>
+          <motion.fieldset
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 1}}
+          >
             <legend>Visitação</legend>
 
             <div className="input-block">
@@ -207,11 +231,17 @@ export default function CreateOrphanage() {
                 onChange={(event) => setWhatsapp(event.target.value)} 
               />
             </div>
-          </fieldset>
+          </motion.fieldset>
 
-          <button className="confirm-button" type="submit">
+          <motion.button
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 1}} 
+            className="confirm-button" 
+            type="submit"
+          >
             Confirmar
-          </button>
+          </motion.button>
         </form>
       </main>
     </div>

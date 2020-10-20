@@ -1,0 +1,74 @@
+#warning-page {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  background: #FF669D;
+  padding: 0 200px;
+}
+
+#warning-page .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  text-align: center;
+}
+
+#warning-page .text-container h1 {
+  font-size: 80px;
+  font-weight: 800;
+}
+#warning-page .text-container p {
+  font-size: 24;
+  font-weight: 600;
+  width: 55%;
+  margin-top: 32px;
+}
+
+#warning-page .text-container .btn-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+#warning-page .text-container button {
+  width: 243px;
+  height: 64px;
+  background: #D6487B;
+  border: 0;
+  border-radius: 20px;
+  
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  
+  transition: background .2s;
+  cursor: pointer;
+}
+
+#warning-page .text-container button:nth-child(1) {
+  background: #31B272;
+}
+#warning-page .text-container button:nth-child(1):hover {
+  background: #3BD689;
+}
+
+#warning-page .text-container button:nth-child(2) {
+  width: 121px;
+  height: 32px;
+  font-size: 9px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+#warning-page .text-container button:hover {
+  background: #C2296A;
+}

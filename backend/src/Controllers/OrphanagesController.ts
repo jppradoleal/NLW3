@@ -131,7 +131,7 @@ export default {
             instructions,
             opening_hours,
             whatsapp,
-            approved: false,
+            approved: true,
             open_on_weekends: open_on_weekends === true,
         }
 
@@ -158,11 +158,11 @@ export default {
     },
 
     async delete(req: Request, res: Response) {
-        const { id } = req.body;
+        const { id } = req.params;
 
         const orphanagesRepository = getRepository(Orphanage);
 
-        await orphanagesRepository.delete({ id });
+        await orphanagesRepository.delete({ id: Number(id) });
 
         return res.json({message: 'Orphanage deleted'});
     }

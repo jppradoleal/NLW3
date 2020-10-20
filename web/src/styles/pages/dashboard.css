@@ -2,6 +2,7 @@
   width: 100vw;
   height: 100vh;
   background: #EBF2F5;
+  overflow-x: hidden;
 }
 #page-dashboard .orphanages-listing {
   margin-left: 100px;

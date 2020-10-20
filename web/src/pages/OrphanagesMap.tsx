@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiPlus, FiArrowRight } from 'react-icons/fi';
+import { FiPlus, FiArrowRight, FiUser } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { motion } from 'framer-motion';
+
 import ChangeDarkMode from '../components/ChangeDarkMode';
 
 import mapMarkerImg from '../images/map-marker.svg';
@@ -20,12 +22,20 @@ interface Orphanage {
 
 function OrphanagesMap() {
   const [ orphanages, setOrphanages ] = useState<Orphanage[]>([]); 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [ isDarkMode, setIsDarkMode ] = useState(false);
+  const [ mapPosition, setMapPosition ] = useState({ latitude: 0, longitude: 0});
 
   useEffect(() => {
     api.get('orphanages').then(response => {
       setOrphanages(response.data);
     });
+
+    navigator.geolocation.getCurrentPosition((data) => {
+      const {latitude, longitude} = data.coords;
+
+      setMapPosition({latitude, longitude});
+    });
+
     setIsDarkMode(localStorage.getItem('darkMode') === 'true');
   }, []);
   
@@ -35,26 +45,53 @@ function OrphanagesMap() {
   }
 
   return (
-    <div id="page-map" className={isDarkMode ? 'dark' : ''}>
+    <div id="page-map" className={isDarkMode ? 'dark' : ''}
+      style={{overflow: 'hidden'}}
+    >
       <aside>
-        <header>
-          <img src={mapMarkerImg} alt=""/>
+          <header
+          >
+            <motion.img 
+              src={mapMarkerImg} 
+              alt=""
+              
+              initial={{x: -500}} 
+              animate={{x: 0}} 
+              transition={{type: 'tween', duration: .5}}
+            />
 
-          <h2>Escolha um orfanato no mapa</h2>
-          <p>Muitas crianças estão esperando a sua visita :)</p>
-        </header>
-        <footer>
-          <strong>Jacareí</strong>
-          <span>São Paulo</span>
-          <ChangeDarkMode 
-            isDarkMode={isDarkMode} 
-            handleDarkModeButton={handleDarkModeButton} 
-          />
-        </footer>
+            <motion.h2
+              initial={{x: -500}} 
+              animate={{x: 0}}
+              transition={{type: 'tween', duration: .7}}
+            >
+              Escolha um orfanato no mapa
+            </motion.h2>
+            <motion.p
+              initial={{x: -500}} 
+              animate={{x: 0}}
+              transition={{type: 'tween', duration: .8}}
+            >
+              Muitas crianças estão esperando a sua visita :)
+            </motion.p>
+          </header>
+          
+          <motion.footer
+            initial={{x: -500}} 
+            animate={{x: 0}}
+            transition={{type: 'tween', duration: .85}}
+          >
+            <strong>Jacareí</strong>
+            <span>São Paulo</span>
+            <ChangeDarkMode 
+              isDarkMode={isDarkMode} 
+              handleDarkModeButton={handleDarkModeButton} 
+            />
+          </motion.footer>
       </aside>
 
       <Map
-        center= {[-23.3017096,-46.0086603]}
+        center= {[mapPosition.latitude, mapPosition.longitude]}
         zoom={15}
         style={{
           width: "100%",
@@ -89,9 +126,13 @@ function OrphanagesMap() {
         })}
       </Map>
 
-      <Link className="create-orphanage" to="orphanages/create">
-        <FiPlus size={32} color="#FFF"/>
-      </Link>
+        <Link className="create-orphanage" to="orphanages/create">
+          <FiPlus size={32} color="#FFF"/>
+        </Link>
+
+        <Link className="login" to="login">
+          <FiUser size={32} color="#fff" />
+        </Link>
     </div>
   );
 }

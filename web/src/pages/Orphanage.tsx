@@ -5,6 +5,8 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { useParams } from 'react-router-dom';
 
+import { motion } from 'framer-motion';
+
 import happyMapIcon from '../utils/mapIcon';
 
 import '../styles/pages/orphanage.css';
@@ -81,8 +83,16 @@ export default function Orphanage() {
           </div>
           
           <div className="orphanage-details-content">
-          <h1>{orphanage.name}</h1>
-            <p>{orphanage.about}</p>
+            <motion.h1 
+              initial={{opacity: 0}} 
+              animate={{opacity: 1}}
+              transition={{duration: 1}}
+            >
+              {orphanage.name}
+            </motion.h1>
+            <motion.p initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 1}}>
+              {orphanage.about}
+            </motion.p>
 
             <div className="map-container">
               <Map 
@@ -112,31 +122,45 @@ export default function Orphanage() {
 
             <hr />
 
-            <h2>Instruções para visita</h2>
-            <p>{orphanage.instructions}</p>
+            <h2
+            >
+              Instruções para visita
+            </h2>
+            <p
+            >
+              {orphanage.instructions}
+            </p>
 
             <div className="open-details">
-              <div className="hour">
+              <div 
+                className="hour"
+              >
                 <FiClock size={32} color="#15B6D6" />
                 Segunda à Sexta <br />
                 {orphanage.opening_hours}
               </div>
               { orphanage.open_on_weekends ? (
-                <div className="open-on-weekends">
+                <div 
+                  className="open-on-weekends"
+                >
                   <FiInfo size={32} color="#39CC83" />
                   Atendemos <br />
                   fim de semana
                 </div>
               ) : (
-                <div className="open-on-weekends dont-open">
+                <div 
+                  className="open-on-weekends dont-open"
+                >
                   <FiInfo size={32} color="#FF6690" />
                   Não atendemos <br />
                   fim de semana
                 </div>
               )}
             </div>
-{/*  */}
-            <a href={`http://wa.me/send?phone=+55${orphanage.whatsapp}&text=Oi,gostaria%20de%20visita-los`} className="contact-button">
+            <a 
+              href={`http://wa.me/send?phone=+55${orphanage.whatsapp}&text=Oi,gostaria%20de%20visita-los`} 
+              className="contact-button"                
+            >
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
             </a>

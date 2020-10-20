@@ -14,12 +14,17 @@ import Reset from './pages/Login/Reset';
 import DashboardPending from './pages/Dashboard/DashboardPending';
 import DashboardApproved from './pages/Dashboard/DashboardApproved';
 import UpdateOrphanage from './pages/Dashboard/UpdateOrphanage';
+import DeleteOrphanageConfirmation from './pages/Dashboard/DeleteOrphanageConfirmation';
 
 function Routes() {
     const [token, setToken] = useState('');
 
     useEffect(() => {
-        setToken(localStorage.getItem('token') || '');
+        if(!token) {
+            const recoveredToken = localStorage.getItem('token')|| '';
+            setToken(recoveredToken);
+        }
+
     }, [token])
 
     return (
@@ -39,6 +44,7 @@ function Routes() {
 
                     <Route path='/dashboard/approved/:id' component={UpdateOrphanage} />
                     <Route path='/dashboard/approved' component={DashboardApproved} />
+                    <Route path='/dashboard/delete' component={DeleteOrphanageConfirmation} />
                     <Route path='/dashboard' component={DashboardPending} />
                 </Switch>
             </BrowserRouter>
