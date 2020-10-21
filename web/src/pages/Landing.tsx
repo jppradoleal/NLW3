@@ -15,7 +15,6 @@ function Landing() {
 
   useEffect(() => {
     setIsDarkMode(localStorage.getItem('darkMode') === 'true');
-    console.log(localStorage.getItem('token'));
   }, [isDarkMode])
   
   // function handleDarkModeButton() {
