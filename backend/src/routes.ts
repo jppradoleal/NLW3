@@ -34,7 +34,7 @@ routes.put('/orphanages/update',
 
 routes.get('/orphanages/:id', OrphanagesController.show);
 
-// routes.post('/signup', UsersController.create);
+routes.post('/signup', UsersController.create);
 
 routes.post('/login', AuthController.login);
 routes.post('/forgot_password', AuthController.forgotPassword);
