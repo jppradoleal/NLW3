@@ -22,5 +22,5 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use(errorHandler);
 
 app.listen(process.env.PORT || 8080, () => {
-    console.log(`Listening on ${8080}`);
+    console.log(`Listening on ${process.env.PORT || 8080}`);
 });
