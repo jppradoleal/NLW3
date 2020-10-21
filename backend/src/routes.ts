@@ -34,10 +34,10 @@ routes.put('/orphanages/update',
 
 routes.get('/orphanages/:id', OrphanagesController.show);
 
-routes.post('/signup', UsersController.create);
+// routes.post('/signup', UsersController.create);
 
 routes.post('/login', AuthController.login);
-routes.post('/forgot_password', AuthController.forgotPassword);
-routes.post('/reset_password', AuthController.resetPassword);
+// routes.post('/forgot_password', AuthController.forgotPassword);
+// routes.post('/reset_password', AuthController.resetPassword);
 
 export default routes;
