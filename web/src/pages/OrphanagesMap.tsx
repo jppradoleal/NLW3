@@ -4,7 +4,7 @@ import { FiPlus, FiArrowRight, FiUser } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import { motion } from 'framer-motion';
 
-import ChangeDarkMode from '../components/ChangeDarkMode';
+// import ChangeDarkMode from '../components/ChangeDarkMode';
 
 import mapMarkerImg from '../images/map-marker.svg';
 
@@ -39,10 +39,10 @@ function OrphanagesMap() {
     setIsDarkMode(localStorage.getItem('darkMode') === 'true');
   }, []);
   
-  function handleDarkModeButton() {
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem('darkMode', String(!isDarkMode));
-  }
+  // function handleDarkModeButton() {
+  //   setIsDarkMode(!isDarkMode);
+  //   localStorage.setItem('darkMode', String(!isDarkMode));
+  // }
 
   return (
     <div id="page-map" className={isDarkMode ? 'dark' : ''}

@@ -4,7 +4,7 @@ import { FaFingerprint } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-import ChangeDarkMode from '../components/ChangeDarkMode';
+// import ChangeDarkMode from '../components/ChangeDarkMode';
 
 import '../styles/pages/landing.css';
 
