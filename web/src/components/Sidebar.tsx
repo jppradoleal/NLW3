@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/components/sidebar.css';
-import ChangeDarkMode from './ChangeDarkMode';
+// import ChangeDarkMode from './ChangeDarkMode';
 
 interface Props {
   isDarkMode: boolean;
@@ -15,13 +15,13 @@ export default function Sidebar({isDarkMode, handleDarkModeButton} : Props) {
   const { goBack } = useHistory();
 
   return (
-    <aside className={`app-sidebar ${isDarkMode ? 'dark' : ''}`}>
+    <aside className="app-sidebar">
       <img src={mapMarkerImg} alt="Happy" />
-      <ChangeDarkMode 
+      {/* <ChangeDarkMode 
         handleDarkModeButton={handleDarkModeButton} 
         isDarkMode={isDarkMode}
         styles={{ width: 50 }}
-      />
+      /> */}
 
       <footer>
       <button type="button" onClick={goBack} className="goBack">

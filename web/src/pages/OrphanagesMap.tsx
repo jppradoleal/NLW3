@@ -83,10 +83,10 @@ function OrphanagesMap() {
           >
             <strong>Jacareí</strong>
             <span>São Paulo</span>
-            <ChangeDarkMode 
+            {/* <ChangeDarkMode 
               isDarkMode={isDarkMode} 
               handleDarkModeButton={handleDarkModeButton} 
-            />
+            /> */}
           </motion.footer>
       </aside>
 

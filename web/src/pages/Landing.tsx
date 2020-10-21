@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
+import { FaFingerprint } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -17,10 +18,10 @@ function Landing() {
     console.log(localStorage.getItem('token'));
   }, [isDarkMode])
   
-  function handleDarkModeButton() {
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem('darkMode', String(!isDarkMode));
-  }
+  // function handleDarkModeButton() {
+  //   setIsDarkMode(!isDarkMode);
+  //   localStorage.setItem('darkMode', String(!isDarkMode));
+  // }
 
   return (
     <div 
@@ -58,11 +59,15 @@ function Landing() {
           <strong>Jacareí</strong>
           <span>São Paulo</span>
           
-          <ChangeDarkMode 
+          {/* <ChangeDarkMode 
             isDarkMode={isDarkMode} 
             handleDarkModeButton={handleDarkModeButton}
             styles={{marginLeft: "auto"}}
-          />
+          /> */}
+
+          <Link to="/login" className="enter-login">
+            <FaFingerprint size={26} color="rgba(0, 0, 0, .6)" />
+          </Link>
         </motion.div>
 
         <motion.div
